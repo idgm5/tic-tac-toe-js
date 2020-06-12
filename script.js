@@ -41,8 +41,16 @@ const board = (() => {
       decide(square, index);
     });
 
-  const updateBoard = (btn) => (console.log(btn), (board[btn] = "X"), draw());
-  return { updateBoard };
+  const initialize = () => {
+    return draw();
+  };
+
+  const save = function save(array) {
+    localStorage.setItem('gameBoard', JSON.stringify(array));
+  };
+
+  const updateBoard = (btn) => ( gameBoard[btn.target.attributes.data.value] = "X", save(gameBoard), window.location.reload());
+  return { updateBoard, initialize };
 })();
 
-board.updateBoard(gameBoard, 2, players[0].symbol);
+board.initialize();
