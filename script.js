@@ -6,16 +6,28 @@ if (gameBoard == null) {
 }
 if (players == null) {
   players = [];
+  form = document.getElementById("form");
+  form.style.display = "flex";
 }
 if (turn == null) {
   turn = 0;
 }
 
-const Player = (name, symbol) => {
-  return { name, symbol };
+const Player = (name) => {
+  const savePlayers = function save(players) {
+    localStorage.setItem("players", JSON.stringify(players));
+  };
+  return { name, savePlayers };
 };
 
-players = [Player("A", "X"), Player("B", "O")];
+function createPLayers() {
+  form = document.getElementById("form");
+  players.push(Player(form[0].value));
+  players.push(Player(form[1].value));
+  players[0].savePlayers(players);
+  form.style.display = "none";
+}
+
 const Game = (turn) => {
   let winner = null;
   const winnerPositions = [
@@ -48,7 +60,6 @@ const Game = (turn) => {
         array[square[1]] === "X" &&
         array[square[2]] === "X"
       ) {
-        console.log(players[0]);
         winner = players[0];
       } else if (
         array[square[0]] === "O" &&
@@ -67,8 +78,8 @@ const Game = (turn) => {
       if (!gameBoard.includes("")) {
         div = document.getElementById("result");
         const para = document.createElement("P");
-        const btn = document.createElement('BUTTON');
-        btn.innerHTML = 'Play Again';
+        const btn = document.createElement("BUTTON");
+        btn.innerHTML = "Play Again";
         para.innerHTML = "Draw";
         div.append(para, btn);
 
@@ -81,27 +92,31 @@ const Game = (turn) => {
     } else {
       div = document.getElementById("result");
       const para = document.createElement("P");
-      const btn = document.createElement('BUTTON');
-      btn.innerHTML = 'Play Again';
+      const btn = document.createElement("BUTTON");
+      btn.innerHTML = "Play Again";
       para.innerHTML = `Congratulations, ${winner.name}! You won`;
       div.append(para, btn);
 
       btn.addEventListener("click", () => {
         gameBoard = ["", "", "", "", "", "", "", "", ""];
         board.save(gameBoard);
+        turn = 0;
+        saveTurn(turn);
         window.location.reload();
+        players = [];
+        players.savePlayers(players);
       });
     }
   };
 
   const ifGameOver = () => {
-    if(winner !== null){
+    if (winner !== null) {
       return true;
     } else {
       return false;
     }
-  }
-  return { turnChange, turn, gameOver, ifGameOver};
+  };
+  return { turnChange, turn, gameOver, ifGameOver };
 };
 
 let game = Game(turn);
@@ -109,10 +124,10 @@ let game = Game(turn);
 const board = (() => {
   const boardTable = document.getElementsByClassName("position");
   const gameEnds = () => {
-    if(game.ifGameOver()){
+    if (game.ifGameOver()) {
       disable();
     }
-  }
+  };
 
   function assignSymbol(playerInTurn) {
     if (playerInTurn == 0) {
@@ -144,7 +159,7 @@ const board = (() => {
     const btns = document.getElementsByClassName("board-cell");
     [...btns].forEach((btn) => {
       btn.setAttribute("class", "disabled");
-    })
+    });
   };
 
   const draw = () => (
@@ -168,7 +183,7 @@ const board = (() => {
     game.turnChange(turn),
     window.location.reload()
   );
-  return { updateBoard, initialize, save};
+  return { updateBoard, initialize, save };
 })();
 
 board.initialize();

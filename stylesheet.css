@@ -12,3 +12,7 @@ body {
   pointer-events: none;
   background: gray;
 }
+
+.form {
+  display: none;
+}
