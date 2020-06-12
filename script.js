@@ -31,6 +31,7 @@ const board = (() => {
       btn.innerHTML = "Push here";
       btn.setAttribute("class", "board-cell");
       btn.setAttribute("data", `${index}`);
+      btn.addEventListener("click", board.updateBoard);
       square.appendChild(btn);
     }
   }
@@ -40,12 +41,8 @@ const board = (() => {
       decide(square, index);
     });
 
-  const updateBoard = (board, position, symbol) => (
-    (board[position] = symbol), draw()
-  );
+  const updateBoard = (btn) => (console.log(btn), (board[btn] = "X"), draw());
   return { updateBoard };
 })();
 
 board.updateBoard(gameBoard, 2, players[0].symbol);
-
-console.log(gameBoard);
