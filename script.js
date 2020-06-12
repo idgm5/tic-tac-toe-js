@@ -1,15 +1,15 @@
-let gameBoard = JSON.parse(localStorage.getItem('gameBoard'));
-let players = JSON.parse(localStorage.getItem('players'));
-let turn = JSON.parse(localStorage.getItem('GameTurn'));
+let gameBoard = JSON.parse(localStorage.getItem("gameBoard"));
+let players = JSON.parse(localStorage.getItem("players"));
+let turn = JSON.parse(localStorage.getItem("GameTurn"));
 if (gameBoard == null) {
-  gameBoard = ['', '', '', '', '', '', '', '', ''];
+  gameBoard = ["", "", "", "", "", "", "", "", ""];
 }
 if (players == null) {
   players = [];
-  const form = document.getElementById('form');
-  form.style.display = 'flex';
-  const tableBoard = document.getElementById('board-table');
-  tableBoard.style.display = 'none';
+  const form = document.getElementById("form");
+  form.style.display = "flex";
+  const tableBoard = document.getElementById("board-table");
+  tableBoard.style.display = "none";
 }
 if (turn == null) {
   turn = 0;
@@ -17,7 +17,7 @@ if (turn == null) {
 
 const Player = (name) => {
   const savePlayers = function save(players) {
-    localStorage.setItem('players', JSON.stringify(players));
+    localStorage.setItem("players", JSON.stringify(players));
   };
   return { name, savePlayers };
 };
@@ -36,7 +36,7 @@ const Game = (turn) => {
   ];
 
   const saveTurn = function saveTurn(array) {
-    localStorage.setItem('GameTurn', JSON.stringify(array));
+    localStorage.setItem("GameTurn", JSON.stringify(array));
   };
 
   const turnChange = (turn) => {
@@ -54,15 +54,15 @@ const Game = (turn) => {
       const [firstPlayer, secondPlayer] = players;
 
       if (
-        array[firstSquare] === 'X'
-        && array[secondSquare] === 'X'
-        && array[thirdSquare] === 'X'
+        array[firstSquare] === "X" &&
+        array[secondSquare] === "X" &&
+        array[thirdSquare] === "X"
       ) {
         winner = firstPlayer;
       } else if (
-        array[firstSquare] === 'O'
-        && array[secondSquare] === 'O'
-        && array[thirdSquare] === 'O'
+        array[firstSquare] === "O" &&
+        array[secondSquare] === "O" &&
+        array[thirdSquare] === "O"
       ) {
         winner = secondPlayer;
       }
@@ -72,28 +72,28 @@ const Game = (turn) => {
   const gameOver = () => {
     checkWinner(gameBoard);
     if (winner == null) {
-      if (!gameBoard.includes('')) {
-        const div = document.getElementById('result');
-        const para = document.createElement('P');
-        const btn = document.createElement('BUTTON');
-        btn.innerHTML = 'Play Again';
-        para.innerHTML = 'Draw';
+      if (!gameBoard.includes("")) {
+        const div = document.getElementById("result");
+        const para = document.createElement("P");
+        const btn = document.createElement("BUTTON");
+        btn.innerHTML = "Play Again";
+        para.innerHTML = "Draw";
         div.append(para, btn);
 
-        btn.addEventListener('click', () => {
+        btn.addEventListener("click", () => {
           localStorage.clear();
           window.location.reload();
         });
       }
     } else {
-      const div = document.getElementById('result');
-      const para = document.createElement('P');
-      const btn = document.createElement('BUTTON');
-      btn.innerHTML = 'Play Again';
+      const div = document.getElementById("result");
+      const para = document.createElement("P");
+      const btn = document.createElement("BUTTON");
+      btn.innerHTML = "Play Again";
       para.innerHTML = `Congratulations, ${winner.name}! You won`;
       div.append(para, btn);
 
-      btn.addEventListener('click', () => {
+      btn.addEventListener("click", () => {
         localStorage.clear();
         window.location.reload();
       });
@@ -117,18 +117,18 @@ const Game = (turn) => {
 const game = Game(turn);
 
 const board = (() => {
-  const boardTable = document.getElementsByClassName('position');
+  const boardTable = document.getElementsByClassName("position");
 
   const currentPlayer = () => {
     if (!(players === null || players.length === 0)) {
       if (turn === 0) {
-        const currentPlayer = document.createElement('P');
-        const div = document.getElementById('result');
+        const currentPlayer = document.createElement("P");
+        const div = document.getElementById("result");
         currentPlayer.innerHTML = `Player ${players[0].name}`;
         div.appendChild(currentPlayer);
       } else {
-        const currentPlayer = document.createElement('P');
-        const div = document.getElementById('result');
+        const currentPlayer = document.createElement("P");
+        const div = document.getElementById("result");
         currentPlayer.innerHTML = `Player ${players[1].name}`;
         div.appendChild(currentPlayer);
       }
@@ -137,34 +137,33 @@ const board = (() => {
 
   function assignSymbol(playerInTurn) {
     if (playerInTurn === 0) {
-      return 'X';
+      return "X";
     }
-    return 'O';
+    return "O";
   }
 
   function decide(square, index) {
-    if (gameBoard[index] === 'X') {
-      const para = document.createElement('P');
-      para.innerHTML = 'X';
+    if (gameBoard[index] === "X") {
+      const para = document.createElement("P");
+      para.innerHTML = "X";
       square.appendChild(para);
-    } else if (gameBoard[index] === 'O') {
-      const para = document.createElement('P');
-      para.innerHTML = 'O';
+    } else if (gameBoard[index] === "O") {
+      const para = document.createElement("P");
+      para.innerHTML = "O";
       square.appendChild(para);
     } else {
-      const btn = document.createElement('BUTTON');
-      btn.innerHTML = 'Push here';
-      btn.setAttribute('class', 'board-cell');
-      btn.setAttribute('data', `${index}`);
-      btn.addEventListener('click', board.updateBoard);
+      const btn = document.createElement("BUTTON");
+      btn.setAttribute("class", "board-cell");
+      btn.setAttribute("data", `${index}`);
+      btn.addEventListener("click", board.updateBoard);
       square.appendChild(btn);
     }
   }
 
   const disable = () => {
-    const btns = document.getElementsByClassName('board-cell');
+    const btns = document.getElementsByClassName("board-cell");
     [...btns].forEach((btn) => {
-      btn.setAttribute('class', 'disabled');
+      btn.setAttribute("class", "disabled");
     });
   };
 
@@ -186,7 +185,7 @@ const board = (() => {
   const initialize = () => draw();
 
   const save = function save(array) {
-    localStorage.setItem('gameBoard', JSON.stringify(array));
+    localStorage.setItem("gameBoard", JSON.stringify(array));
   };
 
   const updateBoard = (btn) => {
@@ -199,14 +198,14 @@ const board = (() => {
 })();
 
 function createPlayers() {
-  const form = document.getElementById('form');
+  const form = document.getElementById("form");
   players.push(Player(form[0].value));
   players.push(Player(form[1].value));
   players[0].savePlayers(players);
-  form.style.display = 'none';
+  form.style.display = "none";
 }
 
-const newPlayers = document.getElementById('submit-form');
-newPlayers.addEventListener('click', createPlayers);
+const newPlayers = document.getElementById("submit-form");
+newPlayers.addEventListener("click", createPlayers);
 
 board.initialize();
