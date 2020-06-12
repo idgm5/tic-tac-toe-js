@@ -16,26 +16,34 @@ players = [Player("A", "X"), Player("B", "O")];
 
 const board = (() => {
   const boardTable = document.getElementsByClassName("position");
-  const para = document.createElement('P');
-  const btn = document.createElement('BUTTON');
-  console.log(boardTable);
 
-  const draw = () => (
+  function decide(square, index) {
+    if (gameBoard[index] == "X") {
+      const para = document.createElement("P");
+      para.innerHTML = "X";
+      square.appendChild(para);
+    } else if (gameBoard[index] == "O") {
+      const para = document.createElement("P");
+      para.innerHTML = "O";
+      square.appendChild(para);
+    } else {
+      const btn = document.createElement("BUTTON");
+      btn.innerHTML = "Push here";
+      btn.setAttribute("class", "board-cell");
+      btn.setAttribute("data", `${index}`);
+      square.appendChild(btn);
+    }
+  }
+
+  const draw = () =>
     [...boardTable].forEach((square, index) => {
-      if(gameBoard[index] == "X"){
-        para.innerHTML = "X";
-        square.appendChild(para);
-      } else if(gameBoard[index] == "O") {
-        para.innerHTML = "O";
-        square.appendChild(para);
-      } else {
-        square.appendChild(btn);
-      }
-    })
-  )
-  const updateBoard = (board, position, symbol) => ( board[position] = symbol,  draw() );
-  return { updateBoard };
+      decide(square, index);
+    });
 
+  const updateBoard = (board, position, symbol) => (
+    (board[position] = symbol), draw()
+  );
+  return { updateBoard };
 })();
 
 board.updateBoard(gameBoard, 2, players[0].symbol);
