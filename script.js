@@ -6,9 +6,9 @@ if (gameBoard == null) {
 }
 if (players == null) {
   players = [];
-  form = document.getElementById("form");
+  const form = document.getElementById("form");
   form.style.display = "flex";
-  let tableBoard = document.getElementById("board-table");
+  const tableBoard = document.getElementById("board-table");
   tableBoard.style.display = "none";
 }
 if (turn == null) {
@@ -22,14 +22,6 @@ const Player = (name) => {
   return { name, savePlayers };
 };
 
-function createPLayers() {
-  form = document.getElementById("form");
-  players.push(Player(form[0].value));
-  players.push(Player(form[1].value));
-  players[0].savePlayers(players);
-  form.style.display = "none";
-}
-
 const Game = (turn) => {
   let winner = null;
   const winnerPositions = [
@@ -42,12 +34,13 @@ const Game = (turn) => {
     [0, 4, 8],
     [6, 4, 2],
   ];
+
   const saveTurn = function saveTurn(array) {
     localStorage.setItem("GameTurn", JSON.stringify(array));
   };
 
   const turnChange = (turn) => {
-    if (turn == 0) {
+    if (turn === 0) {
       turn = 1;
     } else {
       turn = 0;
@@ -75,10 +68,9 @@ const Game = (turn) => {
 
   const gameOver = () => {
     checkWinner(gameBoard);
-
     if (winner == null) {
       if (!gameBoard.includes("")) {
-        div = document.getElementById("result");
+        const div = document.getElementById("result");
         const para = document.createElement("P");
         const btn = document.createElement("BUTTON");
         btn.innerHTML = "Play Again";
@@ -109,14 +101,16 @@ const Game = (turn) => {
   const ifGameOver = () => {
     if (winner !== null) {
       return true;
-    } else {
-      return false;
     }
+    return false;
   };
-  return { turnChange, turn, gameOver, ifGameOver };
+  return {
+    turnChange,
+    turn,
+    gameOver,
+    ifGameOver,
+  };
 };
-
-let game = Game(turn);
 
 const board = (() => {
   const boardTable = document.getElementsByClassName("position");
@@ -125,27 +119,29 @@ const board = (() => {
       disable();
     }
   };
+
   const currentPlayer = () => {
-    if (!players == null) {
+    if (!(players === null || players.length === 0)) {
+      console.log(players);
       if (turn == 0) {
         const currentPlayer = document.createElement("P");
         div = document.getElementById("result");
-        currentPlayer.innerHTML = `Player ${players[0].name}`
+        currentPlayer.innerHTML = `Player ${players[0].name}`;
         div.appendChild(currentPlayer);
       } else {
         const currentPlayer = document.createElement("P");
         div = document.getElementById("result");
-        currentPlayer.innerHTML = `Player ${players[1].name}`
+        currentPlayer.innerHTML = `Player ${players[1].name}`;
         div.appendChild(currentPlayer);
       }
     }
-  }
+  };
+
   function assignSymbol(playerInTurn) {
     if (playerInTurn == 0) {
       return "X";
-    } else {
-      return "O";
     }
+    return "O";
   }
 
   function decide(square, index) {
@@ -166,6 +162,7 @@ const board = (() => {
       square.appendChild(btn);
     }
   }
+
   const disable = () => {
     const btns = document.getElementsByClassName("board-cell");
     [...btns].forEach((btn) => {
@@ -181,9 +178,8 @@ const board = (() => {
     gameEnds(),
     currentPlayer()
   );
-  const initialize = () => {
-    return draw();
-  };
+
+  const initialize = () => draw();
 
   const save = function save(array) {
     localStorage.setItem("gameBoard", JSON.stringify(array));
@@ -197,5 +193,15 @@ const board = (() => {
   );
   return { updateBoard, initialize, save };
 })();
+
+function createPLayers() {
+  form = document.getElementById("form");
+  players.push(Player(form[0].value));
+  players.push(Player(form[1].value));
+  players[0].savePlayers(players);
+  form.style.display = "none";
+}
+
+let game = Game(turn);
 
 board.initialize();
