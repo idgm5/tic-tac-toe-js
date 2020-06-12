@@ -16,8 +16,8 @@ const Player = (name, symbol) => {
 };
 
 players = [Player("A", "X"), Player("B", "O")];
-console.log(players[0].name);
 const Game = (turn) => {
+  let winner = null;
   const winnerPositions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -43,27 +43,42 @@ const Game = (turn) => {
 
   const checkWinner = (array) => {
     winnerPositions.forEach((square) => {
-        if (array[square[0]] === "X" && array[square[1]] === "X" && array[square[2]] === "X") {
-          return players[0];
-        }else if (array[square[0]] === "O" && array[square[1]] === "O" && array[square[2]] === "O") {
-          return players[1];
-        }
+      if (
+        array[square[0]] === "X" &&
+        array[square[1]] === "X" &&
+        array[square[2]] === "X"
+      ) {
+        console.log(players[0]);
+        winner = players[0];
+      } else if (
+        array[square[0]] === "O" &&
+        array[square[1]] === "O" &&
+        array[square[2]] === "O"
+      ) {
+        winner = players[1];
+      }
     });
   };
 
   const gameOver = () => {
-      status = checkWinner;
+    checkWinner(gameBoard);
 
-      if(status == null){
-        if(!gameBoard.includes("")){
-          console.log("gameover");
-        }
-      }else {
-        console.log(status.name);
+    if (winner == null) {
+      if (!gameBoard.includes("")) {
+        div = document.getElementById("result");
+        const para = document.createElement("P");
+        para.innerHTML = "Draw";
+        div.appendChild(para);
       }
-    };
+    } else {
+      div = document.getElementById("result");
+      const para = document.createElement("P");
+      para.innerHTML = `Congratulations, ${winner.name}! You won`;
+      div.appendChild(para);
+    }
+  };
 
-  return { turnChange, turn, gameOver};
+  return { turnChange, turn, gameOver };
 };
 
 let game = Game(turn);
@@ -98,11 +113,12 @@ const board = (() => {
     }
   }
 
-  const draw = () =>
+  const draw = () => (
     [...boardTable].forEach((square, index) => {
       decide(square, index);
-    });
-
+    }),
+    game.gameOver()
+  );
   const initialize = () => {
     return draw();
   };
@@ -115,8 +131,7 @@ const board = (() => {
     (gameBoard[btn.target.attributes.data.value] = assignSymbol(game.turn)),
     save(gameBoard),
     game.turnChange(turn),
-    window.location.reload(),
-    game.gameOver()
+    window.location.reload()
   );
   return { updateBoard, initialize };
 })();
