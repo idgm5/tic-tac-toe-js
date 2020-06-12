@@ -8,6 +8,8 @@ if (players == null) {
   players = [];
   form = document.getElementById("form");
   form.style.display = "flex";
+  let tableBoard = document.getElementById("board-table");
+  tableBoard.style.display = "none";
 }
 if (turn == null) {
   turn = 0;
@@ -98,13 +100,8 @@ const Game = (turn) => {
       div.append(para, btn);
 
       btn.addEventListener("click", () => {
-        gameBoard = ["", "", "", "", "", "", "", "", ""];
-        board.save(gameBoard);
-        turn = 0;
-        saveTurn(turn);
+        localStorage.clear();
         window.location.reload();
-        players = [];
-        players.savePlayers(players);
       });
     }
   };
@@ -128,7 +125,21 @@ const board = (() => {
       disable();
     }
   };
-
+  const currentPlayer = () => {
+    if (!players == null) {
+      if (turn == 0) {
+        const currentPlayer = document.createElement("P");
+        div = document.getElementById("result");
+        currentPlayer.innerHTML = `Player ${players[0].name}`
+        div.appendChild(currentPlayer);
+      } else {
+        const currentPlayer = document.createElement("P");
+        div = document.getElementById("result");
+        currentPlayer.innerHTML = `Player ${players[1].name}`
+        div.appendChild(currentPlayer);
+      }
+    }
+  }
   function assignSymbol(playerInTurn) {
     if (playerInTurn == 0) {
       return "X";
@@ -167,7 +178,8 @@ const board = (() => {
       decide(square, index);
     }),
     game.gameOver(),
-    gameEnds()
+    gameEnds(),
+    currentPlayer()
   );
   const initialize = () => {
     return draw();
