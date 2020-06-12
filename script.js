@@ -16,7 +16,7 @@ const Player = (name, symbol) => {
 };
 
 players = [Player("A", "X"), Player("B", "O")];
-
+console.log(players[0].name);
 const Game = (turn) => {
   const winnerPositions = [
     [0, 1, 2],
@@ -42,10 +42,28 @@ const Game = (turn) => {
   };
 
   const checkWinner = (array) => {
-    winnerPositions.forEach;
+    winnerPositions.forEach((square) => {
+        if (array[square[0]] === "X" && array[square[1]] === "X" && array[square[2]] === "X") {
+          return players[0];
+        }else if (array[square[0]] === "O" && array[square[1]] === "O" && array[square[2]] === "O") {
+          return players[1];
+        }
+    });
   };
 
-  return { turnChange, turn };
+  const gameOver = () => {
+      status = checkWinner;
+
+      if(status == null){
+        if(!gameBoard.includes("")){
+          console.log("gameover");
+        }
+      }else {
+        console.log(status.name);
+      }
+    };
+
+  return { turnChange, turn, gameOver};
 };
 
 let game = Game(turn);
@@ -97,7 +115,8 @@ const board = (() => {
     (gameBoard[btn.target.attributes.data.value] = assignSymbol(game.turn)),
     save(gameBoard),
     game.turnChange(turn),
-    window.location.reload()
+    window.location.reload(),
+    game.gameOver()
   );
   return { updateBoard, initialize };
 })();
