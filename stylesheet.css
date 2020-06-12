@@ -7,3 +7,8 @@ body {
   display: grid;
   grid-template: repeat(3, 1fr) / repeat(3, 1fr);
 }
+
+.disabled {
+  pointer-events: none;
+  background: gray;
+}

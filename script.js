@@ -67,24 +67,52 @@ const Game = (turn) => {
       if (!gameBoard.includes("")) {
         div = document.getElementById("result");
         const para = document.createElement("P");
+        const btn = document.createElement('BUTTON');
+        btn.innerHTML = 'Play Again';
         para.innerHTML = "Draw";
-        div.appendChild(para);
+        div.append(para, btn);
+
+        btn.addEventListener("click", () => {
+          gameBoard = ["", "", "", "", "", "", "", "", ""];
+          board.save(gameBoard);
+          window.location.reload();
+        });
       }
     } else {
       div = document.getElementById("result");
       const para = document.createElement("P");
+      const btn = document.createElement('BUTTON');
+      btn.innerHTML = 'Play Again';
       para.innerHTML = `Congratulations, ${winner.name}! You won`;
-      div.appendChild(para);
+      div.append(para, btn);
+
+      btn.addEventListener("click", () => {
+        gameBoard = ["", "", "", "", "", "", "", "", ""];
+        board.save(gameBoard);
+        window.location.reload();
+      });
     }
   };
 
-  return { turnChange, turn, gameOver };
+  const ifGameOver = () => {
+    if(winner !== null){
+      return true;
+    } else {
+      return false;
+    }
+  }
+  return { turnChange, turn, gameOver, ifGameOver};
 };
 
 let game = Game(turn);
 
 const board = (() => {
   const boardTable = document.getElementsByClassName("position");
+  const gameEnds = () => {
+    if(game.ifGameOver()){
+      disable();
+    }
+  }
 
   function assignSymbol(playerInTurn) {
     if (playerInTurn == 0) {
@@ -112,12 +140,19 @@ const board = (() => {
       square.appendChild(btn);
     }
   }
+  const disable = () => {
+    const btns = document.getElementsByClassName("board-cell");
+    [...btns].forEach((btn) => {
+      btn.setAttribute("class", "disabled");
+    })
+  };
 
   const draw = () => (
     [...boardTable].forEach((square, index) => {
       decide(square, index);
     }),
-    game.gameOver()
+    game.gameOver(),
+    gameEnds()
   );
   const initialize = () => {
     return draw();
@@ -133,7 +168,7 @@ const board = (() => {
     game.turnChange(turn),
     window.location.reload()
   );
-  return { updateBoard, initialize };
+  return { updateBoard, initialize, save};
 })();
 
 board.initialize();
