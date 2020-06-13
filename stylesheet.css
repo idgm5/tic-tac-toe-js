@@ -1,0 +1,40 @@
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+  display: grid;
+  grid-template: repeat(3, 100px) / repeat(3, 100px);
+}
+
+.position {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: blue 1px solid;
+}
+
+.disabled {
+  pointer-events: none;
+  background: gray;
+}
+
+.form {
+  display: none;
+  flex-direction: column;
+  text-align: center;
+}
+
+input {
+  margin-bottom: 15px;
+}
+
+.board-cell {
+  height: 100%;
+  width: 100%;
+  background: transparent;
+  border: none;
+}
