@@ -82,7 +82,36 @@ const board = (() => {
     [...boardTable].forEach((square, index) => {
       decide(square, index);
     });
-    game.gameOver();
+    let winner = game.checkWinner(gameBoard, players);
+
+    if (winner == null) {
+      if (!gameBoard.includes('')) {
+        const div = document.getElementById('result');
+        console.log(div.innerHTML);
+        const para = document.createElement('P');
+        const btn = document.createElement('BUTTON');
+        btn.innerHTML = 'Play Again';
+        para.innerHTML = 'Draw';
+
+        btn.addEventListener('click', () => {
+          localStorage.clear();
+          window.location.reload();
+        });
+        div.append(para, btn);
+      }
+    } else {
+      const div = document.getElementById('result');
+      const para = document.createElement('P');
+      const btn = document.createElement('BUTTON');
+      btn.innerHTML = 'Play Again';
+      para.innerHTML = `Congratulations, ${winner.name}! You won`;
+
+      btn.addEventListener('click', () => {
+        localStorage.clear();
+        window.location.reload();
+      });
+      div.append(para, btn);
+    }
     gameEnds();
     currentPlayer();
   };

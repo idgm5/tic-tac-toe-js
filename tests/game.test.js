@@ -12,19 +12,22 @@ it('Changes the value of turn to 0 from 1', () => {
   var game = Game(1);
   game.turnChange(1);
   let newTurn = JSON.parse(localStorage.getItem('GameTurn'));
-  console.log(newTurn);
   expect(newTurn).toBe(0);
 });
 
 it('Evaluates if a player won', () => {
-    let gameBoard = ['X', 'O', 'X', 'X', 'X', 'O', '', '', '']; // Player 1 wins
-    let players = [Player('A'), Player('B')];
+  let gameBoard = ['X', 'O', 'X', 'X', 'X', 'O', '', '', '']; // Player 1 wins
+  let players = [Player('A'), Player('B')];
 
-    document.body.innerHTML = `<div id="result" /> </div>`;
-    const result = document.getElementById('result');
+  document.body.innerHTML = `<div id="result" /> </div>`;
+  let result = document.getElementById('result');
+  result.innerHTML = 'here';
+  console.log(result);
 
-    let game = Game(0);
-    game.gameOver(gameBoard, players);
+  let game = Game(0);
+  result = game.gameOver(gameBoard, players);
 
-    expect(result.innerHTML).toBe('<p>Congratulations, A! You won</p><button>Play Again</button>')
+  expect(result.innerHTML).toBe(
+    '<p>Congratulations, A! You won</p><button>Play Again</button>'
+  );
 });

@@ -34,47 +34,50 @@ const Game = (turn) => {
         array[secondSquare] === 'X' &&
         array[thirdSquare] === 'X'
       ) {
-        winner = firstPlayer;
+        return firstPlayer;
       } else if (
         array[firstSquare] === 'O' &&
         array[secondSquare] === 'O' &&
         array[thirdSquare] === 'O'
       ) {
-        winner = secondPlayer;
+        return secondPlayer;
       }
     });
   };
 
-  const gameOver = (gameBoard, players) => {
-    checkWinner(gameBoard, players);
-    if (winner == null) {
-      if (!gameBoard.includes('')) {
-        const div = document.getElementById('result');
-        const para = document.createElement('P');
-        const btn = document.createElement('BUTTON');
-        btn.innerHTML = 'Play Again';
-        para.innerHTML = 'Draw';
-        div.append(para, btn);
+  // const gameOver = (gameBoard, players) => {
+  //   checkWinner();
+  //   if (winner == null) {
+  //     if (!gameBoard.includes('')) {
+  //       const div = document.getElementById('result');
+  //       console.log(div.innerHTML);
+  //       const para = document.createElement('P');
+  //       const btn = document.createElement('BUTTON');
+  //       btn.innerHTML = 'Play Again';
+  //       para.innerHTML = 'Draw';
 
-        btn.addEventListener('click', () => {
-          localStorage.clear();
-          window.location.reload();
-        });
-      }
-    } else {
-      const div = document.getElementById('result');
-      const para = document.createElement('P');
-      const btn = document.createElement('BUTTON');
-      btn.innerHTML = 'Play Again';
-      para.innerHTML = `Congratulations, ${winner.name}! You won`;
-      div.append(para, btn);
+  //       btn.addEventListener('click', () => {
+  //         localStorage.clear();
+  //         window.location.reload();
+  //       });
+  //       div.append(para, btn);
+  //       return div;
+  //     }
+  //   } else {
+  //     const div = document.getElementById('result');
+  //     const para = document.createElement('P');
+  //     const btn = document.createElement('BUTTON');
+  //     btn.innerHTML = 'Play Again';
+  //     para.innerHTML = `Congratulations, ${winner.name}! You won`;
 
-      btn.addEventListener('click', () => {
-        localStorage.clear();
-        window.location.reload();
-      });
-    }
-  };
+  //     btn.addEventListener('click', () => {
+  //       localStorage.clear();
+  //       window.location.reload();
+  //     });
+  //     div.append(para, btn);
+  //     return div;
+  //   }
+  // };
 
   const ifGameOver = () => {
     if (winner !== null) {
@@ -85,8 +88,8 @@ const Game = (turn) => {
   return {
     turnChange,
     turn,
-    gameOver,
     ifGameOver,
+    checkWinner,
   };
 };
 
