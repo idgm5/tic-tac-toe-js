@@ -75,7 +75,7 @@ npm test
 
 It should look ike this
 
-![image](#)
+![image](https://i.imgur.com/PaCbL9p.png)
 
 ## Demo
 
