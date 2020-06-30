@@ -14,7 +14,9 @@
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/preset-env": "^7.10.4"
+  },
   "scripts": {
     "test": "jest"
   },
