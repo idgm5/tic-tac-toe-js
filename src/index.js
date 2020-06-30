@@ -1,11 +1,12 @@
 import './stylesheet.css';
+
 const Player = require('./player.js');
 const Game = require('./game');
 
 let gameBoard = JSON.parse(localStorage.getItem('gameBoard'));
 let players = JSON.parse(localStorage.getItem('players'));
 let turn = JSON.parse(localStorage.getItem('GameTurn'));
-var winner = null;
+let winner = null;
 if (gameBoard == null) {
   gameBoard = ['', '', '', '', '', '', '', '', ''];
 }
@@ -38,6 +39,17 @@ const currentPlayer = () => {
       div.appendChild(currentPlayer);
     }
   }
+};
+
+const save = function save(array) {
+  localStorage.setItem('gameBoard', JSON.stringify(array));
+};
+
+const updateBoard = (btn) => {
+  gameBoard[btn] = game.assignSymbol(game.turn);
+  save(gameBoard);
+  game.turnChange(turn);
+  window.location.reload();
 };
 
 function decide(square, index) {
@@ -76,13 +88,10 @@ const draw = () => {
     decide(square, index);
   });
   winner = game.checkWinner(gameBoard, players);
-  console.log(winner);
-  console.log(game.checkWinner(gameBoard, players));
 
   if (winner == null) {
     if (!gameBoard.includes('')) {
       const div = document.getElementById('result');
-      console.log(div.innerHTML);
       const para = document.createElement('P');
       const btn = document.createElement('BUTTON');
       btn.innerHTML = 'Play Again';
@@ -109,17 +118,6 @@ const draw = () => {
   }
   gameEnds();
   currentPlayer();
-};
-
-const save = function save(array) {
-  localStorage.setItem('gameBoard', JSON.stringify(array));
-};
-
-const updateBoard = (btn) => {
-  gameBoard[btn] = game.assignSymbol(game.turn);
-  save(gameBoard);
-  game.turnChange(turn);
-  window.location.reload();
 };
 
 function createPlayers() {

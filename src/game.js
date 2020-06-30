@@ -1,5 +1,4 @@
 const Game = (turn) => {
-  let winner = null;
   const winnerPositions = [
     [0, 1, 2],
     [3, 4, 5],
@@ -25,21 +24,21 @@ const Game = (turn) => {
   };
 
   const checkWinner = (array, players) => {
-    var winnerToReturn = null;
+    let winnerToReturn = null;
     winnerPositions.forEach((square) => {
       const [firstSquare, secondSquare, thirdSquare] = square;
       const [firstPlayer, secondPlayer] = players;
 
       if (
-        array[firstSquare] === 'X' &&
-        array[secondSquare] === 'X' &&
-        array[thirdSquare] === 'X'
+        array[firstSquare] === 'X'
+        && array[secondSquare] === 'X'
+        && array[thirdSquare] === 'X'
       ) {
         winnerToReturn = firstPlayer;
       } else if (
-        array[firstSquare] === 'O' &&
-        array[secondSquare] === 'O' &&
-        array[thirdSquare] === 'O'
+        array[firstSquare] === 'O'
+        && array[secondSquare] === 'O'
+        && array[thirdSquare] === 'O'
       ) {
         winnerToReturn = secondPlayer;
       }
