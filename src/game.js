@@ -25,6 +25,7 @@ const Game = (turn) => {
   };
 
   const checkWinner = (array, players) => {
+    var winnerToReturn = null;
     winnerPositions.forEach((square) => {
       const [firstSquare, secondSquare, thirdSquare] = square;
       const [firstPlayer, secondPlayer] = players;
@@ -34,61 +35,21 @@ const Game = (turn) => {
         array[secondSquare] === 'X' &&
         array[thirdSquare] === 'X'
       ) {
-        return firstPlayer;
+        winnerToReturn = firstPlayer;
       } else if (
         array[firstSquare] === 'O' &&
         array[secondSquare] === 'O' &&
         array[thirdSquare] === 'O'
       ) {
-        return secondPlayer;
+        winnerToReturn = secondPlayer;
       }
     });
+    return winnerToReturn;
   };
 
-  // const gameOver = (gameBoard, players) => {
-  //   checkWinner();
-  //   if (winner == null) {
-  //     if (!gameBoard.includes('')) {
-  //       const div = document.getElementById('result');
-  //       console.log(div.innerHTML);
-  //       const para = document.createElement('P');
-  //       const btn = document.createElement('BUTTON');
-  //       btn.innerHTML = 'Play Again';
-  //       para.innerHTML = 'Draw';
-
-  //       btn.addEventListener('click', () => {
-  //         localStorage.clear();
-  //         window.location.reload();
-  //       });
-  //       div.append(para, btn);
-  //       return div;
-  //     }
-  //   } else {
-  //     const div = document.getElementById('result');
-  //     const para = document.createElement('P');
-  //     const btn = document.createElement('BUTTON');
-  //     btn.innerHTML = 'Play Again';
-  //     para.innerHTML = `Congratulations, ${winner.name}! You won`;
-
-  //     btn.addEventListener('click', () => {
-  //       localStorage.clear();
-  //       window.location.reload();
-  //     });
-  //     div.append(para, btn);
-  //     return div;
-  //   }
-  // };
-
-  const ifGameOver = () => {
-    if (winner !== null) {
-      return true;
-    }
-    return false;
-  };
   return {
     turnChange,
     turn,
-    ifGameOver,
     checkWinner,
   };
 };

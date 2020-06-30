@@ -5,6 +5,7 @@ const Game = require('./game');
 let gameBoard = JSON.parse(localStorage.getItem('gameBoard'));
 let players = JSON.parse(localStorage.getItem('players'));
 let turn = JSON.parse(localStorage.getItem('GameTurn'));
+var winner = null;
 if (gameBoard == null) {
   gameBoard = ['', '', '', '', '', '', '', '', ''];
 }
@@ -73,7 +74,7 @@ const board = (() => {
   };
 
   const gameEnds = () => {
-    if (game.ifGameOver()) {
+    if (winner !== null) {
       disable();
     }
   };
@@ -82,7 +83,9 @@ const board = (() => {
     [...boardTable].forEach((square, index) => {
       decide(square, index);
     });
-    let winner = game.checkWinner(gameBoard, players);
+    winner = game.checkWinner(gameBoard, players);
+    console.log(winner);
+    console.log(game.checkWinner(gameBoard, players));
 
     if (winner == null) {
       if (!gameBoard.includes('')) {
