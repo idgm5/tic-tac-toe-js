@@ -24,7 +24,7 @@ const Game = (turn) => {
     saveTurn(turn);
   };
 
-  const checkWinner = (array) => {
+  const checkWinner = (array, players) => {
     winnerPositions.forEach((square) => {
       const [firstSquare, secondSquare, thirdSquare] = square;
       const [firstPlayer, secondPlayer] = players;
@@ -45,8 +45,8 @@ const Game = (turn) => {
     });
   };
 
-  const gameOver = () => {
-    checkWinner(gameBoard);
+  const gameOver = (gameBoard, players) => {
+    checkWinner(gameBoard, players);
     if (winner == null) {
       if (!gameBoard.includes('')) {
         const div = document.getElementById('result');
