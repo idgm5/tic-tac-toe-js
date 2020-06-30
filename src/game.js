@@ -47,10 +47,18 @@ const Game = (turn) => {
     return winnerToReturn;
   };
 
+  const assignSymbol = (playerInTurn) => {
+    if (playerInTurn === 0) {
+      return 'X';
+    }
+    return 'O';
+  };
+
   return {
     turnChange,
     turn,
     checkWinner,
+    assignSymbol,
   };
 };
 
