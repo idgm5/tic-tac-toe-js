@@ -1,4 +1,4 @@
-# tic-tac-toe-js - Development
+# tic-tac-toe-js - Testing
 A tic tac toe - Build in JS
 
 ## Project specifications
