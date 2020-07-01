@@ -1,0 +1,40 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "A tic tac toe game made in Javascript",
+  "main": "babel.config.js",
+  "directories": {
+    "test": "tests"
+  },
+  "dependencies": {
+    "babel-jest": "^26.1.0",
+    "css-loader": "^3.6.0",
+    "jest": "^26.1.0",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.12"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.10.4",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/idgm5/tic-tac-toe-js.git"
+  },
+  "keywords": [
+    "tic",
+    "tac"
+  ],
+  "author": "Luis Maldonado & Isaac Gonzalez",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/idgm5/tic-tac-toe-js/issues"
+  },
+  "homepage": "https://github.com/idgm5/tic-tac-toe-js#readme"
+}
